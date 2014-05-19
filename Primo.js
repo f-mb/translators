@@ -326,6 +326,11 @@ function importPNX(text) {
 	if(locators) {
 		item.ISBN = ZU.cleanISBN(locators);
 		item.ISSN = ZU.cleanISSN(locators);
+	} else {
+		primoISBN = ZU.xpathText(doc, '//addata/isbn');
+		item.ISBN = ZU.cleanISBN(primoISBN);
+		primoISSN = ZU.xpathText(doc, '//addata/issn');
+		item.ISSN = ZU.cleanISSN(primoISSN);
 	}
 	
 	item.edition = ZU.xpathText(doc, '//display/edition');
@@ -345,7 +350,7 @@ function importPNX(text) {
 	item.pages = ZU.xpathText(doc, '//addata/pages')
 		|| ZU.xpathText(doc, '//addata/spages');
 	item.series = ZU.xpathText(doc, '//addata/seriestitle');
-	
+
 	// does callNumber get stored anywhere else in the xml?
 	item.callNumber = ZU.xpathText(doc, '//browse/callnumber')
 		|| ZU.xpathText(doc, '//enrichment/classificationlcc')
