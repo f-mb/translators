@@ -342,10 +342,17 @@ function importPNX(text) {
 	item.issue = ZU.xpathText(doc, '//addata/issue');
 	item.volume = ZU.xpathText(doc, '//addata/volume');
 	item.publicationTitle = ZU.xpathText(doc, '//addata/jtitle');
-	item.pages = ZU.xpathText(doc, '//addata/pages');
+	item.pages = ZU.xpathText(doc, '//addata/pages')
+		|| ZU.xpathText(doc, '//addata/spages');
+	item.series = ZU.xpathText(doc, '//addata/seriestitle');
 	
 	// does callNumber get stored anywhere else in the xml?
-	item.callNumber = ZU.xpathText(doc, '//enrichment/classificationlcc');
+	item.callNumber = ZU.xpathText(doc, '//browse/callnumber')
+		|| ZU.xpathText(doc, '//enrichment/classificationlcc')
+		|| ZU.xpathText(doc, '//control//recordid');
+	item.libraryCatalog = ZU.xpathText(doc, '//browse/institution')
+		|| ZU.xpathText(doc, '//delivery/institution')
+		|| ZU.xpathText(doc, '//control//sourceid');;
 	
 	item.complete();
 }/** BEGIN TEST CASES **/
